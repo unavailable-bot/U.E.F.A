@@ -17,7 +17,7 @@ namespace UEFA
                     string dateOfBirth = Console.ReadLine();
                     if (dateOfBirth?.Length > 10)
                     {
-                        Console.WriteLine("invalid");
+                        ResultMessage("Invalid date format");
                         continue;
                     }
 
@@ -27,11 +27,11 @@ namespace UEFA
                         return;
                     }
 
-                    Console.WriteLine("success");
+                    ResultMessage("Access granted!");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Error message: {e.Message}");
+                    ResultMessage($"Error message: {e.Message}");
                 }
             }
         }
@@ -50,6 +50,13 @@ namespace UEFA
             {
                 userAge--;
             }
+        }
+
+        private static void ResultMessage(string message)
+        {
+            Console.Clear();
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine(message);
         }
     }
 }
