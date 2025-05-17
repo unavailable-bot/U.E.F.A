@@ -1,0 +1,6 @@
+C:\Users\Kirill\Desktop\UnityCourse\PRACTIC\UEFA\UEFA\bin\Debug\UEFA.exe
+C:\Users\Kirill\Desktop\UnityCourse\PRACTIC\UEFA\UEFA\bin\Debug\UEFA.pdb
+C:\Users\Kirill\Desktop\UnityCourse\PRACTIC\UEFA\UEFA\obj\Debug\UEFA.csproj.AssemblyReference.cache
+C:\Users\Kirill\Desktop\UnityCourse\PRACTIC\UEFA\UEFA\obj\Debug\UEFA.csproj.CoreCompileInputs.cache
+C:\Users\Kirill\Desktop\UnityCourse\PRACTIC\UEFA\UEFA\obj\Debug\UEFA.exe
+C:\Users\Kirill\Desktop\UnityCourse\PRACTIC\UEFA\UEFA\obj\Debug\UEFA.pdb

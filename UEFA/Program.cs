@@ -15,7 +15,7 @@ namespace UEFA
                     Console.Write("Enter your date of birth (dd/mm/yyyy): ");
             
                     string dateOfBirth = Console.ReadLine();
-                    if (dateOfBirth?.Length > 10)
+                    if (dateOfBirth?.Length != 10)
                     {
                         ResultMessage("Invalid date format");
                         continue;
@@ -55,8 +55,8 @@ namespace UEFA
         private static void ResultMessage(string message)
         {
             Console.Clear();
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine(message);
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
 }
