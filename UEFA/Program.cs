@@ -4,34 +4,51 @@ namespace UEFA
 {
     internal class Program
     {
+        private static bool isRegistered;
+        private static bool showGUI;
+        
         private static int userAge;
+        private static string userName;
+        private static int battlesCount = 0;
+        private static int winsCount = 0;
         public static void Main(string[] args)
         {
             while (true)
             {
-                try
+                while (!isRegistered)
                 {
-                    Console.WriteLine("U.E.F.A |Underground Elite Fist Arena| ---> PEGI 12");
-                    Console.Write("Enter your date of birth (dd/mm/yyyy): ");
+                    try
+                    {
+                        Console.WriteLine("U.E.F.A |Underground Elite Fist Arena| ---> PEGI 12");
+                        Console.Write("Enter your date of birth (dd/mm/yyyy): ");
             
-                    string dateOfBirth = Console.ReadLine();
-                    if (dateOfBirth?.Length != 10)
-                    {
-                        ResultMessage("Invalid date format");
-                        continue;
-                    }
+                        string dateOfBirth = Console.ReadLine();
+                        if (dateOfBirth?.Length != 10)
+                        {
+                            ResultMessage("Invalid date format");
+                            continue;
+                        }
 
-                    CalculateAge(dateOfBirth);
-                    if (userAge < 12)
-                    {
-                        return;
-                    }
+                        CalculateAge(dateOfBirth);
+                        if (userAge < 12)
+                        {
+                            return;
+                        }
 
-                    ResultMessage("Access granted!");
+                        userName = Console.ReadLine();
+                        isRegistered = true;
+                        showGUI = true;
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        ResultMessage($"Error message: {e.Message}");
+                    }
                 }
-                catch (Exception e)
+
+                while (showGUI)
                 {
-                    ResultMessage($"Error message: {e.Message}");
+                    UserGUI();
                 }
             }
         }
@@ -50,6 +67,14 @@ namespace UEFA
             {
                 userAge--;
             }
+        }
+
+        private static void UserGUI()
+        {
+            Console.WriteLine($"Username: {userName}");
+            Console.WriteLine($"Age: {userName}");
+            Console.WriteLine($"All Scars: {battlesCount}");
+            Console.WriteLine($"Domination: {winsCount}");
         }
 
         private static void ResultMessage(string message)
