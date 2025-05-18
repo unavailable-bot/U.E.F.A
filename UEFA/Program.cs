@@ -41,6 +41,9 @@ namespace UEFA
                             return;
                         }
 
+                        Console.Clear();
+                        Console.WriteLine("U.E.F.A |Underground Elite Fist Arena| ---> PEGI 12");
+                        Console.Write("Enter your username: ");
                         userName = Console.ReadLine();
                         isRegistered = true;
                         showGUI = true;
@@ -57,13 +60,25 @@ namespace UEFA
                 {
                     while (userGUI)
                     {
+                        Console.Clear();
                         UserGUI();
                     }
 
                     while (isSettings)
                     {
+                        Console.Clear();
                         SettingsGUI();
                     }
+                }
+
+                while (isBattle)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Battle");
+                    Console.ReadKey();
+                    isBattle = false;
+                    showGUI = true;
+                    userGUI = true;
                 }
             }
         }
@@ -78,7 +93,7 @@ namespace UEFA
             DateTime today = DateTime.Today;
             userAge = today.Year - birthDate.Year;
 
-            if (birthDate.Month < today.Month || (birthDate.Month == today.Month && birthDate.Day < today.Day))
+            if (today.Month < birthDate.Month || (birthDate.Month == today.Month && today.Day < birthDate.Day))
             {
                 userAge--;
             }
@@ -87,13 +102,13 @@ namespace UEFA
         private static void UserGUI()
         {
             Console.WriteLine($"Username: {userName}");
-            Console.WriteLine($"Age: {userName}");
+            Console.WriteLine($"Age: {userAge}");
             Console.WriteLine($"All Battles: {battlesCount}");
             Console.WriteLine($"Domination: {winsCount}");
 
             Console.WriteLine($"Difficulty mode: {currentMode}");
 
-            Console.Write($"Settings(S) | Battle(B) | Exit(Any other key):");
+            Console.WriteLine($"Settings(S) | Battle(B) | Exit(ESC):");
             ConsoleKey inputKey = Console.ReadKey().Key;
             switch (inputKey)
             {
@@ -106,9 +121,10 @@ namespace UEFA
                     userGUI = false;
                     showGUI = false;
                     break;
-                default:
+                case ConsoleKey.Escape:
                     isExit = true;
                     userGUI = false;
+                    showGUI = false;
                     break;
             }
         }
