@@ -83,21 +83,8 @@ namespace UEFA
             }
         }
         
-        private static void CalculateAge(string dob)
-        {
-            int day = int.Parse(dob.Substring(0, 2));
-            int month = int.Parse(dob.Substring(3, 2));
-            int year = int.Parse(dob.Substring(6, 4));
-            
-            DateTime birthDate = new DateTime(year, month, day);
-            DateTime today = DateTime.Today;
-            userAge = today.Year - birthDate.Year;
 
-            if (today.Month < birthDate.Month || (birthDate.Month == today.Month && today.Day < birthDate.Day))
-            {
-                userAge--;
-            }
-        }
+        #region GUI
 
         private static void UserGUI()
         {
@@ -153,6 +140,58 @@ namespace UEFA
             }
         }
 
+        #endregion
+        
+        #region Battle
+
+        private static void GetBattleMode(DifficultyMode mode)
+        {
+            switch (mode)
+            {
+                case DifficultyMode.Easy:
+                    break;
+                case DifficultyMode.Normal:
+                    break;
+                case DifficultyMode.Hard:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+            }
+        }
+
+        private static void EasyBattle()
+        {
+            
+        }
+
+        private static void NormalBattle()
+        {
+            
+        }
+
+        private static void HardBattle()
+        {
+            
+        }
+        
+        #endregion
+        
+        private static void CalculateAge(string dob)
+        {
+            int day = int.Parse(dob.Substring(0, 2));
+            int month = int.Parse(dob.Substring(3, 2));
+            int year = int.Parse(dob.Substring(6, 4));
+            
+            DateTime birthDate = new DateTime(year, month, day);
+            DateTime today = DateTime.Today;
+            userAge = today.Year - birthDate.Year;
+
+            if (today.Month < birthDate.Month || (birthDate.Month == today.Month && today.Day < birthDate.Day))
+            {
+                userAge--;
+            }
+        }
+        
         private static void ResultMessage(string message)
         {
             Console.Clear();
