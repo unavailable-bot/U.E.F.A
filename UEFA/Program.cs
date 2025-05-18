@@ -73,7 +73,7 @@ namespace UEFA
         {
             Console.WriteLine($"Username: {userName}");
             Console.WriteLine($"Age: {userName}");
-            Console.WriteLine($"All Scars: {battlesCount}");
+            Console.WriteLine($"All Battles: {battlesCount}");
             Console.WriteLine($"Domination: {winsCount}");
         }
 
