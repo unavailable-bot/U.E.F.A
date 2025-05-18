@@ -15,6 +15,8 @@ namespace UEFA
         private static string userName;
         private static int battlesCount = 0;
         private static int winsCount = 0;
+        
+        private static DifficultyMode currentMode = DifficultyMode.Easy;
         public static void Main(string[] args)
         {
             while (!isExit)
@@ -60,7 +62,7 @@ namespace UEFA
 
                     while (isSettings)
                     {
-                        
+                        SettingsGUI();
                     }
                 }
             }
@@ -100,6 +102,7 @@ namespace UEFA
                 case ConsoleKey.B:
                     isBattle = true;
                     userGUI = false;
+                    showGUI = false;
                     break;
                 default:
                     isExit = true;
@@ -115,15 +118,19 @@ namespace UEFA
             switch (inputKey)
             {
                 case ConsoleKey.E:
-                    
+                    currentMode = DifficultyMode.Easy;
+                    isSettings = false;
+                    userGUI = true;
                     break;
                 case ConsoleKey.N:
-                    
+                    currentMode = DifficultyMode.Normal;
+                    isSettings = false;
+                    userGUI = true;
                     break;
                 case ConsoleKey.H:
-                    
-                    break;
-                default:
+                    currentMode = DifficultyMode.Hard;
+                    isSettings = false;
+                    userGUI = true;
                     break;
             }
         }
