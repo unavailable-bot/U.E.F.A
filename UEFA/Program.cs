@@ -6,6 +6,10 @@ namespace UEFA
     {
         private static bool isRegistered;
         private static bool showGUI;
+        private static bool userGUI;
+        private static bool isBattle;
+        private static bool isSettings;
+        private static bool isExit;
         
         private static int userAge;
         private static string userName;
@@ -13,7 +17,7 @@ namespace UEFA
         private static int winsCount = 0;
         public static void Main(string[] args)
         {
-            while (true)
+            while (!isExit)
             {
                 while (!isRegistered)
                 {
@@ -38,6 +42,7 @@ namespace UEFA
                         userName = Console.ReadLine();
                         isRegistered = true;
                         showGUI = true;
+                        userGUI = true;
                         break;
                     }
                     catch (Exception e)
@@ -48,7 +53,15 @@ namespace UEFA
 
                 while (showGUI)
                 {
-                    UserGUI();
+                    while (userGUI)
+                    {
+                        UserGUI();
+                    }
+
+                    while (isSettings)
+                    {
+                        
+                    }
                 }
             }
         }
@@ -75,6 +88,44 @@ namespace UEFA
             Console.WriteLine($"Age: {userName}");
             Console.WriteLine($"All Battles: {battlesCount}");
             Console.WriteLine($"Domination: {winsCount}");
+
+            Console.Write($"Settings(S) | Battle(B) | Exit(Any other key):");
+            ConsoleKey inputKey = Console.ReadKey().Key;
+            switch (inputKey)
+            {
+                case ConsoleKey.S:
+                    isSettings = true;
+                    userGUI = false;
+                    break;
+                case ConsoleKey.B:
+                    isBattle = true;
+                    userGUI = false;
+                    break;
+                default:
+                    isExit = true;
+                    userGUI = false;
+                    break;
+            }
+        }
+
+        private static void SettingsGUI()
+        {
+            Console.WriteLine("Easy(E) | Normal(N) | Hard(H)");
+            ConsoleKey inputKey = Console.ReadKey().Key;
+            switch (inputKey)
+            {
+                case ConsoleKey.E:
+                    
+                    break;
+                case ConsoleKey.N:
+                    
+                    break;
+                case ConsoleKey.H:
+                    
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static void ResultMessage(string message)
