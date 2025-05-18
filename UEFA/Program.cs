@@ -91,6 +91,8 @@ namespace UEFA
             Console.WriteLine($"All Battles: {battlesCount}");
             Console.WriteLine($"Domination: {winsCount}");
 
+            Console.WriteLine($"Difficulty mode: {currentMode}");
+
             Console.Write($"Settings(S) | Battle(B) | Exit(Any other key):");
             ConsoleKey inputKey = Console.ReadKey().Key;
             switch (inputKey)
