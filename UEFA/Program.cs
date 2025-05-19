@@ -22,6 +22,7 @@ namespace UEFA
         public static void Main(string[] args)
         {
             InitStyle();
+            
             ShowIntro();
             
             while (!isExit)
@@ -30,7 +31,6 @@ namespace UEFA
                 {
                     try
                     {
-                        
                         Console.Clear();
                         Console.CursorVisible = true;
                         Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🔴Enter your date of birth (dd/mm/yyyy): ");
@@ -103,10 +103,13 @@ namespace UEFA
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.CursorVisible = false;
+            Console.Clear();
         }
 
         private static void ShowIntro()
         {
+            PrintLogo();
+            
             Console.Clear();
             Thread.Sleep(500);
             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖");
@@ -118,6 +121,40 @@ namespace UEFA
             Console.Clear();
             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tPEGI 12");
             Thread.Sleep(2500);
+        }
+
+        private static void PrintLogo()
+        {
+            string[] art = new string[]
+            {
+                "HHHH  HHHH    GGGGGGGG ",
+                " HH    HH    GGGGGGGGGG",
+                " HH    HH    GGG    GGG",
+                " HH    HH    GG      GG",
+                " HHH  HHH    GG        ",
+                " HHHHHHHH    GG        ",
+                " HHH  HHH    GG   GGGGG",
+                " HH    HH    GG   GG GG",
+                " HH    HH    GGG     GG",
+                " HH    HH    GGGGGGGGGG",
+                "HHHH  HHHH    GGGGGGGG "
+            };
+            
+            Console.WriteLine("\n\n\n\n\n\n");
+            foreach (var line in art)
+            {
+                Console.WriteLine("\t\t\t\t\t   " + line);
+                Thread.Sleep(50);
+            }
+            Thread.Sleep(1000);
+
+            string studioName = "\n\t\t\t\t\t    Holy Grow Production";
+            foreach (char ch in studioName)
+            {
+                Console.Write(ch);
+                Thread.Sleep(25);
+            }
+            Thread.Sleep(3000);
         }
         
         #endregion
