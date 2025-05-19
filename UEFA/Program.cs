@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading;
 
 namespace UEFA
@@ -20,19 +21,23 @@ namespace UEFA
         private static DifficultyMode currentMode = DifficultyMode.Easy;
         public static void Main(string[] args)
         {
+            InitStyle();
+            ShowIntro();
+            
             while (!isExit)
             {
                 while (!isRegistered)
                 {
                     try
                     {
-                        Console.WriteLine("U.E.F.A |Underground Elite Fist Arena| ---> PEGI 12");
-                        Console.Write("Enter your date of birth (dd/mm/yyyy): ");
+                        
+                        Console.Clear();
+                        Console.CursorVisible = true;
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🔴Enter your date of birth (dd/mm/yyyy): ");
             
                         string dateOfBirth = Console.ReadLine();
                         if (dateOfBirth?.Length != 10)
                         {
-                            ResultMessage("Invalid date format");
                             continue;
                         }
 
@@ -41,14 +46,14 @@ namespace UEFA
                         {
                             return;
                         }
-
                         Console.Clear();
-                        Console.WriteLine("U.E.F.A |Underground Elite Fist Arena| ---> PEGI 12");
-                        Console.Write("Enter your username: ");
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🟢Enter your date of birth (dd/mm/yyyy): " + dateOfBirth);
+                        Console.Write("\n\t\t\t\t\t👤Enter your username: ");
                         userName = Console.ReadLine();
                         isRegistered = true;
                         showGUI = true;
                         userGUI = true;
+                        Console.CursorVisible = false;
                         break;
                     }
                     catch (Exception e)
@@ -75,7 +80,12 @@ namespace UEFA
                 while (isBattle)
                 {
                     Console.Clear();
-                    Prints();
+                    PrintFIGHT();
+                    Thread.Sleep(3000);
+                    Console.Clear();
+                    PrintPaper();
+                    PrintRock();
+                    PrintClips();
                     Console.ReadKey();
                     isBattle = false;
                     showGUI = true;
@@ -84,19 +94,50 @@ namespace UEFA
             }
         }
         
+        #region Style
+
+        private static void InitStyle()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.Title = "UEFA";
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.CursorVisible = false;
+        }
+
+        private static void ShowIntro()
+        {
+            Console.Clear();
+            Thread.Sleep(500);
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖");
+            Thread.Sleep(150);
+            Console.WriteLine("\t\t\t\t\tU.E.F.A | Underground Elite Fist Arena");
+            Thread.Sleep(150);
+            Console.WriteLine("\t\t\t\t ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖");
+            Thread.Sleep(3000);
+            Console.Clear();
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tPEGI 12");
+            Thread.Sleep(2500);
+        }
+        
+        #endregion
 
         #region GUI
 
         private static void UserGUI()
         {
-            Console.WriteLine($"Username: {userName}");
-            Console.WriteLine($"Age: {userAge}");
-            Console.WriteLine($"All Battles: {battlesCount}");
-            Console.WriteLine($"Domination: {winsCount}");
+            Console.Write($"Username: {userName}");
+            Thread.Sleep(300);
+            Console.Write($"\t\t\tAge: {userAge}");
+            Thread.Sleep(300);
+            Console.Write($"\t\t\t\t\t\tAll Battles: {battlesCount}");
+            Thread.Sleep(300);
+            Console.WriteLine($"\n\t\t\t\t\t\t\t\t\t\t\tDomination: {winsCount}");
+            Thread.Sleep(300);
 
-            Console.WriteLine($"Difficulty mode: {currentMode}");
-
-            Console.WriteLine($"Settings(S) | Battle(B) | Exit(ESC):");
+            Console.WriteLine($"\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tDifficulty mode: {currentMode}");
+            Thread.Sleep(300);
+            Console.Write($"\t\t\t\t  Settings(S) | Battle(B) | Exit(ESC):");
             ConsoleKey inputKey = Console.ReadKey().Key;
             switch (inputKey)
             {
@@ -119,7 +160,7 @@ namespace UEFA
 
         private static void SettingsGUI()
         {
-            Console.WriteLine("Easy(E) | Normal(N) | Hard(H)");
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tEasy(E) | Normal(N) | Hard(H)");
             ConsoleKey inputKey = Console.ReadKey().Key;
             switch (inputKey)
             {
@@ -174,103 +215,104 @@ namespace UEFA
         {
             
         }
-        
-        private static void Prints()
+
+        private static void PrintFIGHT()
         {
             string[] art = new string[]
             {
-                "                          #######                         ",
-                "                       ####     ###                       ",
-                "                     ###        ###                       ",
-                "                  ####         ##                         ",
-                "           ########          ###                          ",
-                "      ######               ###                            ",
-                "    ###                #####                              ",
-                "   ##               #################################     ",
-                "  ##                                                ##    ",
-                " ##                                                 ##    ",
-                "##                             ######################     ",
-                "#                              #########################  ",
-                "#                                                      ## ",
-                "#                                                      ## ",
-                "#                              #########################  ",
-                "#                              ########################## ",
-                "#                                                       ##",
-                "##                                                      ##",
-                " ##                            ########################## ",
-                "  ###                          #####################      ",
-                "    ####                                           ##     ",
-                "       #####                                       ##     ",
-                "           #########################################      "
+                "FFFFFFFFFFFFF   FFFFFF    FFFFFFFF    FFFF  FFFF   FFFFFFFFFF",
+                " FFFFFFFFFFF     FFFF    FFFFFFFFFF    FF    FF     FFFFFFFF ",
+                " FF               FF     FFF    FFF    FF    FF        FF    ",
+                " FFFFFFFFF        FF     FF      FF    FF    FF        FF    ",
+                " FFFFFFFF         FF     FF            FFF  FFF        FF    ",
+                " FF               FF     FF            FFFFFFFF        FF    ",
+                " FF               FF     FF   FFFFF    FFF  FFF        FF    ",
+                " FF               FF     FF   FF FF    FF    FF        FF    ",
+                " FF               FF     FFF     FF    FF    FF        FF    ",
+                " FF              FFFF    FFFFFFFFFF    FF    FF        FF    ",
+                "FFFF            FFFFFF    FFFFFFFF    FFFF  FFFF      FFFF   "
+            };
+
+            Console.WriteLine("\n\n\n\n\n\n");
+            foreach (var line in art)
+            {
+                Console.WriteLine("\t\t\t   " + line);
+                Thread.Sleep(50);
+            }
+        }
+
+        private static void PrintPaper()
+        {
+            string[] art = new string[]
+            {
+                "\n\n\n             ####             ",
+                "          ##    ##            ",
+                "    ######     #              ",
+                "  ##        ##############    ",
+                " ##                       #   ",
+                "#             ##############  ",
+                "#                           # ",
+                "#               ############  ",
+                "#                           # ",
+                " #              ############  ",
+                "  #                       #   ",
+                "    ######################    "
             };
 
             foreach (var line in art)
             {
                 Console.WriteLine(line);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
-            
-            string[] art2 = new string[]
+        }
+
+        private static void PrintRock()
+        {
+            string[] art = new string[]
             {
-                "                  ###########                ",
-                "           ########          ##              ",
-                "      ######                   ##            ",
-                "    ###                         ##           ",
-                "   ##               #####       ########     ",
-                "  ##                    #        #     ##    ",
-                " ##                     #       #      ##    ",
-                "##                       ##    #########     ",
-                "#                         #################  ",
-                "#                        ##               ## ",
-                "#                        ##               ## ",
-                "#                         #################  ",
-                "#                        ################### ",
-                "#                       ##                 ##",
-                "##                      ##                 ##",
-                " ##                      ################### ",
-                "  ###                       ###########      ",
-                "    ####                   ##         ##     ",
-                "       #####               ##         ##     ",
-                "           ############################       "
+                "\n\n\n                              ",
+                "        #######               ",
+                "    ####       #              ",
+                "  ##       #   ######         ",
+                " ##         #  #     #        ",
+                "#            #########        ",
+                "#            #        #       ",
+                "#             ########        ",
+                "#            #        #       ",
+                " #            ########        ",
+                "  #            #    #         ",
+                "    ################          "
             };
 
-            foreach (var line in art2)
+            foreach (var line in art)
             {
                 Console.WriteLine(line);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
-            
-            string[] art3 = new string[]
+        }
+
+        private static void PrintClips()
+        {
+            string[] art = new string[]
             {
-                "                                                           ",
-                "                                                           ",
-                "                                                           ",
-                "                  ###########                              ",
-                "           ########          ###                           ",
-                "      ######                   ##                          ",
-                "    ###                         ##                         ",
-                "   ##               #####        ####################      ",
-                "  ##                    #        #                  ##     ",
-                " ##                     #       #                   ##     ",
-                "##                       ##    ######################      ",
-                "#                         ##############################   ",
-                "#                                                      ##  ",
-                "#                                                      ##  ",
-                "#                         ##############################   ",
-                "#                        ###################               ",
-                "#                       ##                 ##              ",
-                "##                      ##                 ##              ",
-                " ##                      ###################               ",
-                "  ###                       ###########                    ",
-                "    ####                   ##         ##                   ",
-                "       #####               ##         ##                   ",
-                "           ############################                    "
+                "\n\n\n                              ",
+                "        #######               ",
+                "    ####       #              ",
+                "  ##       #   ###########    ",
+                " ##         #  #          #   ",
+                "#            ## ############  ",
+                "#                           # ",
+                "#             ############## ",
+                "#            #        #      ",
+                " #            ########       ",
+                "  #            #    #        ",
+                "    ################         "
             };
 
-            foreach (var line in art3)
+            foreach (var line in art)
             {
                 Console.WriteLine(line);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
         }
         
@@ -296,7 +338,6 @@ namespace UEFA
         {
             Console.Clear();
             Console.WriteLine(message);
-            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
 }
