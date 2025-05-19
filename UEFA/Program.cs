@@ -23,7 +23,7 @@ namespace UEFA
         {
             InitStyle();
             
-            ShowIntro();
+            //ShowIntro();
             
             while (!isExit)
             {
@@ -46,10 +46,22 @@ namespace UEFA
                         {
                             return;
                         }
-                        Console.Clear();
-                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🟢Enter your date of birth (dd/mm/yyyy): " + dateOfBirth);
-                        Console.Write("\n\t\t\t\t\t👤Enter your username: ");
-                        userName = Console.ReadLine();
+                        
+                        bool userNameStep = true;
+                        while (userNameStep)
+                        {
+                            Console.Clear();
+                            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🟢Enter your date of birth (dd/mm/yyyy): " + dateOfBirth);
+                            Console.Write("\n\t\t\t\t\t👤Enter your username: ");
+                            
+                            userName = Console.ReadLine();
+                            if (userName?.Length > 30)
+                            {
+                                continue;
+                            }
+                            userNameStep = false;
+                        }
+                        
                         isRegistered = true;
                         showGUI = true;
                         userGUI = true;
@@ -122,40 +134,6 @@ namespace UEFA
             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tPEGI 12");
             Thread.Sleep(2500);
         }
-
-        private static void PrintLogo()
-        {
-            string[] art = new string[]
-            {
-                "HHHH  HHHH    GGGGGGGG ",
-                " HH    HH    GGGGGGGGGG",
-                " HH    HH    GGG    GGG",
-                " HH    HH    GG      GG",
-                " HHH  HHH    GG        ",
-                " HHHHHHHH    GG        ",
-                " HHH  HHH    GG   GGGGG",
-                " HH    HH    GG   GG GG",
-                " HH    HH    GGG     GG",
-                " HH    HH    GGGGGGGGGG",
-                "HHHH  HHHH    GGGGGGGG "
-            };
-            
-            Console.WriteLine("\n\n\n\n\n\n");
-            foreach (var line in art)
-            {
-                Console.WriteLine("\t\t\t\t\t   " + line);
-                Thread.Sleep(50);
-            }
-            Thread.Sleep(1000);
-
-            string studioName = "\n\t\t\t\t\t    Holy Grow Production";
-            foreach (char ch in studioName)
-            {
-                Console.Write(ch);
-                Thread.Sleep(25);
-            }
-            Thread.Sleep(3000);
-        }
         
         #endregion
 
@@ -163,18 +141,22 @@ namespace UEFA
 
         private static void UserGUI()
         {
-            Console.Write($"Username: {userName}");
+            Console.WriteLine($"\t\t\t\t\t  Settings(S) | Battle(B) | Exit(ESC):");
             Thread.Sleep(300);
-            Console.Write($"\t\t\tAge: {userAge}");
+            Console.Write($"\t\t\t\t\t\tDifficulty mode: {currentMode}");
             Thread.Sleep(300);
-            Console.Write($"\t\t\t\t\t\tAll Battles: {battlesCount}");
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t ➖➖➖➖➖➖➖➖➖");
             Thread.Sleep(300);
-            Console.WriteLine($"\n\t\t\t\t\t\t\t\t\t\t\tDomination: {winsCount}");
+            Console.WriteLine($"\t\t\t\t\t\t  Username: {userName}");
             Thread.Sleep(300);
+            Console.WriteLine($"\t\t\t\t\t\t  Age: {userAge}");
+            Thread.Sleep(300);
+            Console.WriteLine($"\t\t\t\t\t\t  All Battles: {battlesCount}");
+            Thread.Sleep(300);
+            Console.WriteLine($"\t\t\t\t\t\t  Domination: {winsCount}");
+            Thread.Sleep(300);
+            Console.WriteLine("\t\t\t\t\t\t ➖➖➖➖➖➖➖➖➖");
 
-            Console.WriteLine($"\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tDifficulty mode: {currentMode}");
-            Thread.Sleep(300);
-            Console.Write($"\t\t\t\t  Settings(S) | Battle(B) | Exit(ESC):");
             ConsoleKey inputKey = Console.ReadKey().Key;
             switch (inputKey)
             {
@@ -197,7 +179,7 @@ namespace UEFA
 
         private static void SettingsGUI()
         {
-            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tEasy(E) | Normal(N) | Hard(H)");
+            Console.Write("\t\t\t\t\t      Easy(E) | Normal(N) | Hard(H)");
             ConsoleKey inputKey = Console.ReadKey().Key;
             switch (inputKey)
             {
@@ -253,6 +235,46 @@ namespace UEFA
             
         }
 
+        
+        
+        #endregion
+
+        #region Prints
+
+        private static void PrintLogo()
+        {
+            string[] art = new string[]
+            {
+                "HHHH  HHHH    GGGGGGGG ",
+                " HH    HH    GGGGGGGGGG",
+                " HH    HH    GGG    GGG",
+                " HH    HH    GG      GG",
+                " HHH  HHH    GG        ",
+                " HHHHHHHH    GG        ",
+                " HHH  HHH    GG   GGGGG",
+                " HH    HH    GG   GG GG",
+                " HH    HH    GGG     GG",
+                " HH    HH    GGGGGGGGGG",
+                "HHHH  HHHH    GGGGGGGG "
+            };
+            
+            Console.WriteLine("\n\n\n\n\n\n");
+            foreach (var line in art)
+            {
+                Console.WriteLine("\t\t\t\t\t   " + line);
+                Thread.Sleep(50);
+            }
+            Thread.Sleep(1000);
+
+            string studioName = "\n\t\t\t\t\t    Holy Grow Production";
+            foreach (char ch in studioName)
+            {
+                Console.Write(ch);
+                Thread.Sleep(25);
+            }
+            Thread.Sleep(3000);
+        }
+        
         private static void PrintFIGHT()
         {
             string[] art = new string[]
@@ -270,10 +292,35 @@ namespace UEFA
                 "FFFF            FFFFFF    FFFFFFFF    FFFF  FFFF      FFFF   "
             };
 
-            Console.WriteLine("\n\n\n\n\n\n");
+            Console.WriteLine("\n\n\n\n\n\n     ");
             foreach (var line in art)
             {
                 Console.WriteLine("\t\t\t   " + line);
+                Thread.Sleep(50);
+            }
+        }
+        
+        private static void PrintRock()
+        {
+            string[] art = new string[]
+            {
+                "\n\n\n                              ",
+                "        #######               ",
+                "    ####       #              ",
+                "  ##       #   ######         ",
+                " ##         #  #     #        ",
+                "#            #########        ",
+                "#            #        #       ",
+                "#             ########        ",
+                "#            #        #       ",
+                " #            ########        ",
+                "  #            #    #         ",
+                "    ################          "
+            };
+
+            foreach (var line in art)
+            {
+                Console.WriteLine(line);
                 Thread.Sleep(50);
             }
         }
@@ -294,31 +341,6 @@ namespace UEFA
                 " #              ############  ",
                 "  #                       #   ",
                 "    ######################    "
-            };
-
-            foreach (var line in art)
-            {
-                Console.WriteLine(line);
-                Thread.Sleep(50);
-            }
-        }
-
-        private static void PrintRock()
-        {
-            string[] art = new string[]
-            {
-                "\n\n\n                              ",
-                "        #######               ",
-                "    ####       #              ",
-                "  ##       #   ######         ",
-                " ##         #  #     #        ",
-                "#            #########        ",
-                "#            #        #       ",
-                "#             ########        ",
-                "#            #        #       ",
-                " #            ########        ",
-                "  #            #    #         ",
-                "    ################          "
             };
 
             foreach (var line in art)
@@ -352,7 +374,7 @@ namespace UEFA
                 Thread.Sleep(50);
             }
         }
-        
+
         #endregion
         
         private static void CalculateAge(string dob)
