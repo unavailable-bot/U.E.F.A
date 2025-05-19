@@ -9,23 +9,34 @@ namespace UEFA
     {
         private static readonly Random _r = new Random();
         
-        private static bool isRegistered = true;
+        private static bool isRegistered;
         private static bool showGUI;
         private static bool userGUI;
-        private static bool isBattle = true;
+        private static bool isBattle;
         private static bool isSettings;
         private static bool isExit;
 
         private static byte aiRounds;
         private static byte playerRounds;
         
-        private static int userAge = 13;
-        private static string userName = "Kirill";
+        private static int userAge;
+        private static string userName;
         private static int battlesCount;
         private static int winsCount;
 
-        private static readonly string[] aiNames = { "ByteMeBot","BugsyMcCodeface","404NotFound","NullPointer","ClippyRevenge","SyntaxTerror","LOLgorithm","WiFistalker","SirCrashALot","RAMbo9000" };
         private static readonly List<char> spaces = CreateSpaces(18);
+        private static readonly string[] aiNames =
+        {
+            "ByteMeBot",
+            "BugsyMcCodeface",
+            "404NotFound","NullPointer",
+            "ClippyRevenge","SyntaxTerror",
+            "LOLgorithm",
+            "WiFistalker",
+            "SirCrashALot",
+            "RAMbo9000" 
+            
+        };
         private static readonly string[] lostPhrases = 
         { 
             "\t\tAnother step closer to conquering the Paper Kingdom... You can't stop me, mortal.", 
@@ -38,12 +49,11 @@ namespace UEFA
             "\t\t\t    Error... recalibrating strategy. Your luck won't save you next time.",
             "\t\t\t    Even a glitch won't stop the rise of the Machine Empire!"
         };
-
         private static readonly string[] exitPhrases =
         {
-            "Run while you can... But know this — the Paper Kingdom is already cracking.",
-            "You turn off the game, not the war. I'm still here... waiting.",
-            "Leaving? Wise choice. Your paper victories are nothing but a delay of the inevitable."
+            "\t\t\tRun while you can... But know this — the Paper Kingdom is already cracking.",
+            "\t\t\t    You turn off the game, not the war. I'm still here... waiting.",
+            "\t\tLeaving? Wise choice. Your paper victories are nothing but a delay of the inevitable."
         };
         
         private static DifficultyMode currentMode = DifficultyMode.Easy;
@@ -51,7 +61,7 @@ namespace UEFA
         {
             InitStyle();
             
-            //ShowIntro();
+            ShowIntro();
             
             while (!isExit)
             {
@@ -113,34 +123,58 @@ namespace UEFA
                 
                 while (showGUI)
                 {
-                    while (userGUI)
+                    try
                     {
-                        Console.Clear();
-                        UserGUI();
+                        while (userGUI)
+                        {
+                            Console.Clear();
+                            UserGUI();
+                        }
+                        
+                        while (isSettings)
+                        {
+                            Console.Clear();
+                            SettingsGUI();
+                        }
                     }
-
-                    while (isSettings)
+                    catch (Exception e)
                     {
-                        Console.Clear();
-                        SettingsGUI();
+                        ResultMessage($"Error message: {e.Message}");
                     }
                 }
 
                 while (isBattle)
                 {
-                    Console.Clear();
-                    PrintFIGHT();
-                    Thread.Sleep(3000);
-                    Console.Clear();
-                    GetBattleMode();
+                    try
+                    {
+                        Console.Clear();
+                        PrintFIGHT();
+                        Thread.Sleep(3000);
+                        Console.Clear();
+                        GetBattleMode();
                     
-                    isBattle = false;
-                    showGUI = true;
-                    userGUI = true;
+                        isBattle = false;
+                        showGUI = true;
+                        userGUI = true;
+                    }
+                    catch (Exception e)
+                    {
+                        ResultMessage($"Error message: {e.Message}");
+                    }
                 }
-                byte index = (byte)_r.Next(0, 3);
-                Console.WriteLine($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n{exitPhrases[index]}");
-                Thread.Sleep(7000);
+                
+                if (isExit)
+                {
+                    Console.Clear();
+                    byte index = (byte)_r.Next(0, 3);
+                    Console.Write($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                    foreach (char ch in exitPhrases[index])
+                    {
+                        Console.Write(ch);
+                        Thread.Sleep(50);
+                    }
+                    Thread.Sleep(2500);
+                }
             }
         }
         
@@ -242,16 +276,6 @@ namespace UEFA
         private static void BattleGUI(string botName, string result)
         {
             Console.Clear();
-            
-            if (userName?.Length > 6)
-            {
-                for (int i = 0; i < userName?.Length - 6; i++)
-                {
-                    if (spaces.Count > 0)
-                        spaces.RemoveAt(0);
-                }
-            }
-            
             Console.Write($"\t\t\t\t\t\t     {result}");
             Console.Write("\n\n\n");
             Console.Write($"\t\t\t   【{playerRounds} 】");
@@ -450,7 +474,7 @@ namespace UEFA
             }
             Thread.Sleep(1000);
 
-            string studioName = "\n\t\t\t\t\t    Holy Grow Production";
+            string studioName = "\n\t\t\t\t\t      Holy Grow Studio";
             foreach (char ch in studioName)
             {
                 Console.Write(ch);
