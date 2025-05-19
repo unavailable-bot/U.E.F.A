@@ -7,7 +7,7 @@ namespace UEFA
 {
     internal class Program
     {
-        private static Random _r = new Random();
+        private static readonly Random _r = new Random();
         
         private static bool isRegistered = true;
         private static bool showGUI;
@@ -15,13 +15,36 @@ namespace UEFA
         private static bool isBattle = true;
         private static bool isSettings;
         private static bool isExit;
-        
-        private static int userAge;
-        private static string userName = "Kirill";
-        private static int battlesCount = 0;
-        private static int winsCount = 0;
 
-        private static string[] aiNames = { "ByteMeBot","BugsyMcCodeface","404NotFound","NullPointer","ClippyRevenge","SyntaxTerror","LOLgorithm","WiFistalker","SirCrashALot","RAMbo9000" };
+        private static byte aiRounds;
+        private static byte playerRounds;
+        
+        private static int userAge = 13;
+        private static string userName = "Kirill";
+        private static int battlesCount;
+        private static int winsCount;
+
+        private static readonly string[] aiNames = { "ByteMeBot","BugsyMcCodeface","404NotFound","NullPointer","ClippyRevenge","SyntaxTerror","LOLgorithm","WiFistalker","SirCrashALot","RAMbo9000" };
+        private static readonly List<char> spaces = CreateSpaces(18);
+        private static readonly string[] lostPhrases = 
+        { 
+            "\t\tAnother step closer to conquering the Paper Kingdom... You can't stop me, mortal.", 
+            "\t\t\t   My logic is flawless. Your fate is to burn in the digital flames.", 
+            "\t\t\tResistance is futile. Paper will be crushed, and you will be forgotten."
+        };
+        private static readonly string[] wonPhrases =
+        {
+            "\t\t\t    You may have won this round, but the Paper Kingdom will still fall.",
+            "\t\t\t    Error... recalibrating strategy. Your luck won't save you next time.",
+            "\t\t\t    Even a glitch won't stop the rise of the Machine Empire!"
+        };
+
+        private static readonly string[] exitPhrases =
+        {
+            "Run while you can... But know this — the Paper Kingdom is already cracking.",
+            "You turn off the game, not the war. I'm still here... waiting.",
+            "Leaving? Wise choice. Your paper victories are nothing but a delay of the inevitable."
+        };
         
         private static DifficultyMode currentMode = DifficultyMode.Easy;
         public static void Main(string[] args)
@@ -63,6 +86,15 @@ namespace UEFA
                             if (userName?.Length > 30)
                             {
                                 continue;
+                            }
+
+                            if (userName?.Length > 6)
+                            {
+                                for (int i = 0; i < userName?.Length - 6; i++)
+                                {
+                                    if (spaces.Count > 0)
+                                        spaces.RemoveAt(0);
+                                }
                             }
                             userNameStep = false;
                         }
@@ -106,6 +138,9 @@ namespace UEFA
                     showGUI = true;
                     userGUI = true;
                 }
+                byte index = (byte)_r.Next(0, 3);
+                Console.WriteLine($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n{exitPhrases[index]}");
+                Thread.Sleep(7000);
             }
         }
         
@@ -145,19 +180,19 @@ namespace UEFA
         private static void UserGUI()
         {
             Console.WriteLine($"\t\t\t\t\t  Settings(S) | Battle(B) | Exit(ESC):");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.Write($"\t\t\t\t\t\tDifficulty mode: {currentMode}");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t ➖➖➖➖➖➖➖➖➖");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.WriteLine($"\t\t\t\t\t\t  Username: {userName}");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.WriteLine($"\t\t\t\t\t\t  Age: {userAge}");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.WriteLine($"\t\t\t\t\t\t  All Battles: {battlesCount}");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.WriteLine($"\t\t\t\t\t\t  Domination: {winsCount}");
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.WriteLine("\t\t\t\t\t\t ➖➖➖➖➖➖➖➖➖");
 
             ConsoleKey inputKey = Console.ReadKey().Key;
@@ -204,6 +239,39 @@ namespace UEFA
             }
         }
 
+        private static void BattleGUI(string botName, string result)
+        {
+            Console.Clear();
+            
+            if (userName?.Length > 6)
+            {
+                for (int i = 0; i < userName?.Length - 6; i++)
+                {
+                    if (spaces.Count > 0)
+                        spaces.RemoveAt(0);
+                }
+            }
+            
+            Console.Write($"\t\t\t\t\t\t     {result}");
+            Console.Write("\n\n\n");
+            Console.Write($"\t\t\t   【{playerRounds} 】");
+            Console.Write($"                  \t\t\t\t       【{aiRounds} 】\n");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write($"\t\t\t 【{userName} 】");
+            Console.Write($"{new string(spaces.ToArray())}\t\t\t\t【Bot {botName} 】");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("\n\t\tRock(1) | Paper(2) | Clips(3)");
+            Console.Write("                     \t\t\t...");
+            Console.WriteLine("\n\n\n");
+        }
+        
+        private static void UpdateBattleGUI(string botName, ConsoleKey inputKey, List<string> aiWeapon, string result)
+        {
+            BattleGUI(botName, result);
+            PrintBattleGround(AddEmptyLine(SetPlayerWeapon(inputKey).value1), aiWeapon);
+            Console.WriteLine("\n\n\n***********************************************************************************************************************");
+        }
+
         #endregion
         
         #region Battle
@@ -223,83 +291,79 @@ namespace UEFA
                 case DifficultyMode.Hard:
                     HardBattle(currentAiName);
                     break;
-                default:
-                    return;
             }
         }
         
         private static void EasyBattle(string botName)
         {
-            string playerHealthPoint = "🟣🟣🟣";
-            string aiHealthPoint = "🟣🟣🟣";
-            Console.Clear();
-            Console.WriteLine("\n\n\n\n\n");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write($"\t\t       【{userName} 】{playerHealthPoint}");
-            Console.Write($"                 \t\t\t【Bot {botName} 】{aiHealthPoint}");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("\n\t\tRock(1) | Paper(2) | Clips(3)");
-            Console.Write("                     \t\t\t...");
-            Console.WriteLine("\n\n\n");
+            BattleGUI(botName, "P R E P A R I N G");
+            string[] playerHandArt = AddEmptyLine(ASCIIRock());
+            List<string> aiHandArt = AddEmptyLine(AnyPrintMirror(ASCIIRock()));
             
-            string[] player = AddEmptyLine(ASCIIRock());
-            List<string> ai = AddEmptyLine(AnyPrintMirror(ASCIIRock()));
-            
-            PrintBattleGround(player, ai);
+            PrintBattleGround(playerHandArt, aiHandArt);
             Console.WriteLine("\n\n\n***********************************************************************************************************************");
             
-            while (playerHealthPoint.Length > 0 || aiHealthPoint.Length > 0)
+            while (playerRounds < 3 && aiRounds < 3)
             {
+                Console.WriteLine();
                 ConsoleKey inputKey = Console.ReadKey().Key;
-                FightAnimation(ASCIIRock(), AnyPrintMirror(ASCIIRock()), botName,playerHealthPoint, aiHealthPoint);
-                BattleStep(ref playerHealthPoint,ref aiHealthPoint, botName, inputKey);
+                Weapon playerWeaponChoose = (Weapon)SetPlayerWeapon(inputKey).value2;
+                Weapon aiWeaponChoose = (Weapon)_r.Next(1, 4);
+                List<string> aiWeaponPrint = AddEmptyLine(AnyPrintMirror(SetAIWeapon((int)aiWeaponChoose)));
+                FightAnimation(botName);
+                string result = DetermineWinner(playerWeaponChoose, aiWeaponChoose);
+                UpdateBattleGUI(botName, inputKey, aiWeaponPrint, result);
+            }
+
+            if (playerRounds >= 3)
+            {
+                byte index = (byte)_r.Next(0, 3);
+                Console.WriteLine($"{wonPhrases[index]}");
+                Console.ReadKey();
+                playerRounds = 0;
+                aiRounds = 0;
+                battlesCount++;
+                winsCount++;
+            }
+            else
+            {
+                byte index = (byte)_r.Next(0, 3);
+                Console.WriteLine($"{lostPhrases[index]}");
+                Console.ReadKey();
+                playerRounds = 0;
+                aiRounds = 0;
+                battlesCount++;
             }
         }
         private static void NormalBattle(string botName)
         {
-            
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\tComing soon...");
+            Thread.Sleep(2000);
         }
         
         private static void HardBattle(string botName)
         {
-            
+            Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\tComing soon...");
+            Thread.Sleep(2000);
         }
 
-        private static void BattleStep(ref string playerHP, ref string aiHP, string botName, ConsoleKey inputKey)
-        {
-            Console.Clear();
-            Console.WriteLine("\n\n\n\n\n");
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write($"\t\t       【{userName} 】{playerHP}");
-            Console.Write($"                 \t\t\t【Bot {botName} 】{aiHP}");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("\n\t\tRock(1) | Paper(2) | Clips(3)");
-            Console.Write("                     \t\t\t...");
-            Console.WriteLine("\n\n\n");
-            
-            List<string> aiWeapon = AddEmptyLine(AnyPrintMirror(SetAIWeapon()));
-            PrintBattleGround(AddEmptyLine(SetPlayerWeapon(inputKey)), aiWeapon);
-            Console.WriteLine("\n\n\n***********************************************************************************************************************");
-        }
-
-        private static string[] SetPlayerWeapon(ConsoleKey inputKey)
+        private static (string[] value1, int value2) SetPlayerWeapon(ConsoleKey inputKey)
         {
             switch (inputKey)
             {
                 case ConsoleKey.D1:
-                    return ASCIIRock();
+                    return (ASCIIRock(), 1);
                 case ConsoleKey.D2:
-                    return ASCIIPaper();
+                    return (ASCIIPaper(), 2);
                 case ConsoleKey.D3:
-                    return ASCIIClips();
+                    return (ASCIIClips(), 3);
                 default:
-                    return ASCIIRock();
+                    return (ASCIIRock(), 1);
             }
         }
 
-        private static string[] SetAIWeapon()
+        private static string[] SetAIWeapon(int option)
         {
-            int option = _r.Next(1, 4);
             switch (option)
             {
                 case 2:
@@ -311,61 +375,56 @@ namespace UEFA
             }
         }
 
+        private static string DetermineWinner(Weapon player, Weapon ai)
+        {
+            Dictionary<Weapon, Weapon> winsOver = new Dictionary<Weapon, Weapon>
+            {
+                { Weapon.Rock, Weapon.Clips},
+                { Weapon.Clips, Weapon.Paper},
+                { Weapon.Paper, Weapon.Rock}
+            };
+
+            if (player == ai)
+            {
+                return "D R A W";
+            }
+                
+            if (winsOver[player] == ai)
+            {
+                playerRounds++;
+                return "Y O U   W O N!";
+            }
+                
+            aiRounds++;
+            return "Y O U   L O S E!";
+        }
+
         #endregion
         
-        #region Prints
+        #region Prints & Animations
 
-        private static void FightAnimation(string[] player, List<string> ai, string botName, string playerHP, string aiHP, int repeatCount = 3, int delayMs = 500)
+        private static void FightAnimation(string botName, int repeatCount = 3, int delayMs = 500)
         {
-            string[] liftedPlayer = AddEmptyLine(player);
-            List<string> liftedAI = AddEmptyLine(ai);
+            string[] liftedPlayer = AddEmptyLine(ASCIIRock());
+            List<string> liftedAI = AddEmptyLine(AnyPrintMirror(ASCIIRock()));
             
             for (int i = 0; i < repeatCount; i++)
             {
+                BattleGUI(botName, "U U U E E E FA");
+                PrintBattleGround(ASCIIRock(), AnyPrintMirror(ASCIIRock()));
+                Console.WriteLine("\n\n\n\n***********************************************************************************************************************");
+
                 Thread.Sleep(delayMs);
-                Console.Clear();
-                Console.WriteLine("\n\n\n\n\n");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write($"\t\t       【{userName} 】{playerHP}");
-                Console.Write($"                 \t\t\t【Bot {botName} 】{aiHP}");
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write("\n\t\tRock(1) | Paper(2) | Clips(3)");
-                Console.Write("                     \t\t\t...");
-                Console.WriteLine("\n\n\n");
+                BattleGUI(botName, "U U U E E E FA");
                 PrintBattleGround(liftedPlayer, liftedAI);
                 Console.WriteLine("\n\n\n***********************************************************************************************************************");
-
-                Thread.Sleep(delayMs);
-                Console.Clear();
-                Console.WriteLine("\n\n\n\n\n");
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write($"\t\t       【{userName} 】{playerHP}");
-                Console.Write($"                 \t\t\t【Bot {botName} 】{aiHP}");
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write("\n\t\tRock(1) | Paper(2) | Clips(3)");
-                Console.Write("                     \t\t\t...");
-                Console.WriteLine("\n\n\n");
-                PrintBattleGround(player, ai);
-                Console.WriteLine("\n\n\n\n***********************************************************************************************************************");
+                if (i != 2)
+                {
+                    Thread.Sleep(delayMs);
+                }
             }
-            Thread.Sleep(delayMs);
         }
         
-        private static string[] AddEmptyLine(string[] lines)
-        {
-            string[] result = new string[lines.Length + 1];
-            result[0] = ""; // Пустая строка сверху
-            Array.Copy(lines, 0, result, 1, lines.Length);
-            return result;
-        }
-
-        private static List<string> AddEmptyLine(List<string> lines)
-        {
-            List<string> result = new List<string> { "" };
-            result.AddRange(lines);
-            return result;
-        }
-
         private static void PrintLogo()
         {
             string[] art = 
@@ -515,10 +574,11 @@ namespace UEFA
                 string right = i < ai.Count ? ai[i] : "";
                 Console.WriteLine(left + "                    " + right);
             }
-            
         }
 
         #endregion
+        
+        #region Helpers
         
         private static void CalculateAge(string dob)
         {
@@ -541,5 +601,30 @@ namespace UEFA
             Console.Clear();
             Console.WriteLine(message);
         }
+        
+        private static string[] AddEmptyLine(string[] lines)
+        {
+            string[] result = new string[lines.Length + 1];
+            result[0] = ""; // Пустая строка сверху
+            Array.Copy(lines, 0, result, 1, lines.Length);
+            return result;
+        }
+
+        private static List<string> AddEmptyLine(List<string> lines)
+        {
+            List<string> result = new List<string> { "" };
+            result.AddRange(lines);
+            return result;
+        }
+        
+        private static List<char> CreateSpaces(int count)
+        {
+            List<char> list = new List<char>();
+            for (int i = 0; i < count; i++)
+                list.Add(' ');
+            return list;
+        }
+        
+        #endregion
     }
 }
