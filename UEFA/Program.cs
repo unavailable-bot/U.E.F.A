@@ -1,22 +1,27 @@
 using System;
 using System.Text;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace UEFA
 {
     internal class Program
     {
-        private static bool isRegistered;
+        private static Random _r = new Random();
+        
+        private static bool isRegistered = true;
         private static bool showGUI;
         private static bool userGUI;
-        private static bool isBattle;
+        private static bool isBattle = true;
         private static bool isSettings;
         private static bool isExit;
         
         private static int userAge;
-        private static string userName;
+        private static string userName = "Kirill";
         private static int battlesCount = 0;
         private static int winsCount = 0;
+
+        private static string[] aiNames = { "ByteMeBot","BugsyMcCodeface","404NotFound","NullPointer","ClippyRevenge","SyntaxTerror","LOLgorithm","WiFistalker","SirCrashALot","RAMbo9000" };
         
         private static DifficultyMode currentMode = DifficultyMode.Easy;
         public static void Main(string[] args)
@@ -33,7 +38,7 @@ namespace UEFA
                     {
                         Console.Clear();
                         Console.CursorVisible = true;
-                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🔴Enter your date of birth (dd/mm/yyyy): ");
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🔴 Enter your date of birth (dd/mm/yyyy): ");
             
                         string dateOfBirth = Console.ReadLine();
                         if (dateOfBirth?.Length != 10)
@@ -51,8 +56,8 @@ namespace UEFA
                         while (userNameStep)
                         {
                             Console.Clear();
-                            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🟢Enter your date of birth (dd/mm/yyyy): " + dateOfBirth);
-                            Console.Write("\n\t\t\t\t\t👤Enter your username: ");
+                            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t🟢 Enter your date of birth (dd/mm/yyyy): " + dateOfBirth);
+                            Console.Write("\n\t\t\t\t\t👤 Enter your username: ");
                             
                             userName = Console.ReadLine();
                             if (userName?.Length > 30)
@@ -73,7 +78,7 @@ namespace UEFA
                         ResultMessage($"Error message: {e.Message}");
                     }
                 }
-
+                
                 while (showGUI)
                 {
                     while (userGUI)
@@ -92,12 +97,13 @@ namespace UEFA
                 while (isBattle)
                 {
                     Console.Clear();
-                    PrintFIGHT();
-                    Thread.Sleep(3000);
+                    //PrintFIGHT();
+                    //Thread.Sleep(3000);
                     Console.Clear();
-                    PrintPaper();
-                    PrintRock();
-                    PrintClips();
+                    EasyBattle();
+                    //PrintPaper();
+                    //PrintRock();
+                    //PrintClips();
                     Console.ReadKey();
                     isBattle = false;
                     showGUI = true;
@@ -222,9 +228,22 @@ namespace UEFA
 
         private static void EasyBattle()
         {
-            
-        }
+            string playerHealthPoint = "🟣🟣🟣";
+            string aiHealthPoint = "🟣🟣🟣";
+            string currentAiName = aiNames[_r.Next(0, aiNames.Length + 1)];
+            Console.WriteLine("\n\n\n\n\n");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write($"\t\t\t 【{userName} 】{playerHealthPoint}");
+            Console.Write($"                  \t\t\t【Bot {currentAiName} 】{aiHealthPoint}");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("\n\t\tRock(1) | Paper(2) | Clips(3)");
+            Console.Write("                    \t\t\t...");
+            Console.WriteLine("\n\n\n");
+            string[] player = ASCIIRock();
+            List<string> ai = AnyPrintMirror(ASCIIRock());
 
+            PrintBattleGround(player, ai);
+        }
         private static void NormalBattle()
         {
             
@@ -235,15 +254,13 @@ namespace UEFA
             
         }
 
-        
-        
         #endregion
 
         #region Prints
 
         private static void PrintLogo()
         {
-            string[] art = new string[]
+            string[] art = 
             {
                 "HHHH  HHHH    GGGGGGGG ",
                 " HH    HH    GGGGGGGGGG",
@@ -277,7 +294,7 @@ namespace UEFA
         
         private static void PrintFIGHT()
         {
-            string[] art = new string[]
+            string[] art = 
             {
                 "FFFFFFFFFFFFF   FFFFFF    FFFFFFFF    FFFF  FFFF   FFFFFFFFFF",
                 " FFFFFFFFFFF     FFFF    FFFFFFFFFF    FF    FF     FFFFFFFF ",
@@ -300,11 +317,11 @@ namespace UEFA
             }
         }
         
-        private static void PrintRock()
+        private static string[] ASCIIRock()
         {
-            string[] art = new string[]
+            string[] art = 
             {
-                "\n\n\n                              ",
+                "                              ",
                 "        #######               ",
                 "    ####       #              ",
                 "  ##       #   ######         ",
@@ -317,19 +334,14 @@ namespace UEFA
                 "  #            #    #         ",
                 "    ################          "
             };
-
-            foreach (var line in art)
-            {
-                Console.WriteLine(line);
-                Thread.Sleep(50);
-            }
+            return art;
         }
 
-        private static void PrintPaper()
+        private static string[] ASCIIPaper()
         {
-            string[] art = new string[]
+            string[] art = 
             {
-                "\n\n\n             ####             ",
+                "             ####             ",
                 "          ##    ##            ",
                 "    ######     #              ",
                 "  ##        ##############    ",
@@ -342,19 +354,14 @@ namespace UEFA
                 "  #                       #   ",
                 "    ######################    "
             };
-
-            foreach (var line in art)
-            {
-                Console.WriteLine(line);
-                Thread.Sleep(50);
-            }
+            return art;
         }
 
-        private static void PrintClips()
+        private static string[] ASCIIClips()
         {
-            string[] art = new string[]
+            string[] art = 
             {
-                "\n\n\n                              ",
+                "                              ",
                 "        #######               ",
                 "    ####       #              ",
                 "  ##       #   ###########    ",
@@ -367,12 +374,40 @@ namespace UEFA
                 "  #            #    #        ",
                 "    ################         "
             };
-
-            foreach (var line in art)
+            return art;
+        }
+        
+        private static List<string> AnyPrintMirror(string[] print)
+        {
+            string Mirror(string line)
             {
-                Console.WriteLine(line);
-                Thread.Sleep(50);
+                string mirrored = "";
+                foreach (char c in line)
+                {
+                    mirrored = c + mirrored;
+                }
+                return mirrored;
             }
+            
+            List<string> mirroredAI = new List<string>();
+            foreach (var line in print)
+            {
+                mirroredAI.Add(Mirror(line));
+            }
+
+            return mirroredAI;
+        }
+
+        private static void PrintBattleGround(string[] player, List<string> ai)
+        {
+            int lines = Math.Max(player.Length, ai.Count);
+            for (int i = 0; i < lines; i++)
+            {
+                string left = i < player.Length ? "\t\t   " + player[i] : new string(' ', player[0].Length);
+                string right = i < ai.Count ? ai[i] : "";
+                Console.WriteLine(left + "                    " + right);
+            }
+            Console.WriteLine("\n\n\n***********************************************************************************************************************");
         }
 
         #endregion
